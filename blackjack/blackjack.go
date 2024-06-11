@@ -36,16 +36,20 @@ func FirstTurn(card1, card2, dealerCard string) string {
 	switch cardsSum := ParseCard(card1) + ParseCard(card2); {
 	case card1 == "ace" && card2 == "ace":
 		decision = "P"
-	case cardsSum == 21 && dealerCard != "ace" && ParseCard(dealerCard) != 10:
-		decision = "W"
-	case cardsSum == 21 && (dealerCard == "ace" || ParseCard(dealerCard) == 10):
-		decision = "S"
+	case cardsSum == 21:
+		if dealerCard != "ace" && ParseCard(dealerCard) != 10 {
+			decision = "W"
+		} else {
+			decision = "S"
+		}
 	case cardsSum >= 17 && cardsSum <= 20:
 		decision = "S"
-	case (cardsSum >= 12 && cardsSum <= 16) && ParseCard(dealerCard) < 7:
-		decision = "S"
-	case (cardsSum >= 12 && cardsSum <= 16) && ParseCard(dealerCard) >= 7:
-		decision = "H"
+	case (cardsSum >= 12 && cardsSum <= 16):
+		if ParseCard(dealerCard) < 7 {
+			decision = "S"
+		} else {
+			decision = "H"
+		}
 	case cardsSum <= 11:
 		decision = "H"
 	}
