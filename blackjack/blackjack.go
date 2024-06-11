@@ -33,11 +33,11 @@ func ParseCard(card string) int {
 // player and one card of the dealer.
 func FirstTurn(card1, card2, dealerCard string) string {
 	var decision string
-	switch cardsSum := ParseCard(card1) + ParseCard(card2); {
+	switch dealerCardValue, cardsSum := ParseCard(dealerCard), ParseCard(card1)+ParseCard(card2); {
 	case card1 == "ace" && card2 == "ace":
 		decision = "P"
 	case cardsSum == 21:
-		if dealerCard != "ace" && ParseCard(dealerCard) != 10 {
+		if dealerCard != "ace" && dealerCardValue != 10 {
 			decision = "W"
 		} else {
 			decision = "S"
@@ -45,7 +45,7 @@ func FirstTurn(card1, card2, dealerCard string) string {
 	case cardsSum >= 17 && cardsSum <= 20:
 		decision = "S"
 	case (cardsSum >= 12 && cardsSum <= 16):
-		if ParseCard(dealerCard) < 7 {
+		if dealerCardValue < 7 {
 			decision = "S"
 		} else {
 			decision = "H"
