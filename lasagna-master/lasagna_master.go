@@ -17,25 +17,35 @@ package lasagna
 // an increasing number of tests passing as you implement more
 // functionality.
 
+const (
+	defaultPreparationTimePerLayer = 2
+	noodlesInGmPerNoodleLayer      = 50
+	sauceInLPerSauceLayer          = 0.2
+)
+
 func PreparationTime(layers []string, avgPreparationTimePerLayer int) int {
 	if avgPreparationTimePerLayer == 0 {
-		avgPreparationTimePerLayer = 2
+		avgPreparationTimePerLayer = defaultPreparationTimePerLayer
 	}
 	totalTime := len(layers) * avgPreparationTimePerLayer
 	return totalTime
 }
 func Quantities(layers []string) (noodles int, sauce float64) {
+	var noodleLayers, sauceLayers int
 	for _, l := range layers {
 		if l == "noodles" {
-			noodles += 50
+			noodleLayers++
 		} else if l == "sauce" {
-			sauce += 0.2
+			sauceLayers++
 		}
 	}
+	noodles = noodlesInGmPerNoodleLayer * noodleLayers
+	sauce = sauceInLPerSauceLayer * float64(sauceLayers)
 	return noodles, sauce
 }
 func AddSecretIngredient(friendsList []string, myList []string) {
-	myList[len(myList)-1] = friendsList[len(friendsList)-1]
+	secretIngredient := friendsList[len(friendsList)-1]
+	myList[len(myList)-1] = secretIngredient
 }
 func ScaleRecipe(quantitiesForTwoPortions []float64, portions int) (scaledQuantities []float64) {
 	var scale float64 = float64(portions) / 2
